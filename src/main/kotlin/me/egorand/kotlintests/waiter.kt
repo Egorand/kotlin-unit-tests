@@ -33,7 +33,7 @@ class SimpleCalculator : Calculator {
   override fun countTotal(vararg prices: Int) = prices.sum()
 }
 
-interface Printer<T> {
+interface Printer<in T> {
   fun print(t: T)
 }
 

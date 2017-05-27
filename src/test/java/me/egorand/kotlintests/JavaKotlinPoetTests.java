@@ -31,14 +31,15 @@ public class JavaKotlinPoetTests {
             "  return a + b\n" +
             "}\n";
 
-    KotlinFile code = KotlinFile.builder("", "Sum")
+    String code = KotlinFile.builder("", "Sum")
         .addFun(FunSpec.builder("sum")
             .addParameter("a", Integer.class)
             .addParameter("b", Integer.class)
             .addStatement("return a + b")
             .build())
-        .build();
+        .build()
+        .toString();
 
-    assertThat(code.toString()).isEqualTo(expected);
+    assertThat(code).isEqualTo(expected);
   }
 }
