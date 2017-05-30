@@ -16,30 +16,34 @@
 
 package me.egorand.kotlintests
 
+import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import org.amshove.kluent.`it returns`
 import org.junit.Before
 import org.junit.Test
 
 class WaiterTests {
 
-  private val mockCalculator = mock<Calculator>()
-  private val mockPrinter = mock<Printer<Int>>()
+  private lateinit var mockCalculator: Calculator
+  private lateinit var mockPrinter: Printer<Int>
 
   private lateinit var waiter: Waiter
 
   @Before fun `init waiter`() {
+    mockCalculator = mock {
+      on { countTotal(any()) } `it returns` 0
+    }
+    mockPrinter = mock()
+
     waiter = Waiter(mockCalculator, mockPrinter)
   }
 
   @Test fun `should count total and print receipt`() {
     val prices = intArrayOf(1, 2, 3, 4, 5)
-    whenever(mockCalculator.countTotal(*prices)) `it returns` 15
 
     waiter.countAndPrintReceipt(*prices)
 
-    verify(mockPrinter).print(15)
+    verify(mockPrinter).print(0)
   }
 }
